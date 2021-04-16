@@ -6,17 +6,38 @@
 
 // 4. WHEN the game is over, THEN I can save my initials and score//
 
+
+// Create your HTML Page via DOM Methods here!
+
+// We access the <body> element by using `document.body`
+var body = document.body;
+
+// Add a centered h1
+// We create HTML elements by passing the element by name to `createElement()`
+// and storing the value in a variable
+var h1El = document.createElement('h1');
+
+// We add text by using the `textContent` property
+h1El.textContent = 'Welcome to my page';
+
+// We add style by using the `setAttribute()` method
+h1El.setAttribute('style', 'margin:auto; width:50%; text-align:center;');
+
+// We append the newly created element to the DOM using `appendChild()`
+body.appendChild(h1El);
+
+
 submitButton.addEventListener('click', showResults);
 
 const myQuestions = [
   {
-    question: "Who invented JavaScript?",
+    question: "Commonly used data types DO Not include:",
     answers: {
-      a: "Douglas Crockford",
-      b: "Sheryl Sandberg",
-      c: "Brendan Eich"
+      1: "strings",
+      2: "booleans",
+      3: "alerts"
     },
-    correctAnswer: "c"
+    correctAnswer: "2"
   },
   {
     question: "Which one of these is a JavaScript package manager?",
