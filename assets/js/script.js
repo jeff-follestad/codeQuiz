@@ -7,113 +7,138 @@
 // 4. WHEN the game is over, THEN I can save my initials and score//
 
 
-// Create your HTML Page via DOM Methods here!
+const startButton = document.getElementById('start-btn');
+const nextButton = document.getElementById('next-btn');
+const questionsContainerEl = document.getElementById('questionsCon');
 
-// We access the <body> element by using `document.body`
-var body = document.body;
+const questionElement = document.getElementById('question')
+const answerButtonsElement = document.getElementById('answer-buttons')
 
-// Add a centered h1
-// We create HTML elements by passing the element by name to `createElement()`
-// and storing the value in a variable
-var h1El = document.createElement('h1');
+var score = 0;
 
-// We add text by using the `textContent` property
-h1El.textContent = 'Welcome to my page';
+let shuffledQuestions, currentQuestionIndex;
 
-// We add style by using the `setAttribute()` method
-h1El.setAttribute('style', 'margin:auto; width:50%; text-align:center;');
-
-// We append the newly created element to the DOM using `appendChild()`
-body.appendChild(h1El);
-
-
-submitButton.addEventListener('click', showResults);
-
-const myQuestions = [
-  {
-    question: "Commonly used data types DO Not include:",
-    answers: {
-      1: "strings",
-      2: "booleans",
-      3: "alerts"
+const questions = [
+    {
+        question: "Commonly used data types DO NOY include:",
+        answers: [
+        { text: 'function ()', correct: true },
+        { text: 'method ()', correct: false },
+        { text: 'variable ()', correct: false },
+        { text: 'class ()', correct: false }
+        ]
     },
-    correctAnswer: "2"
-  },
-  {
-    question: "Which one of these is a JavaScript package manager?",
-    answers: {
-      a: "Node.js",
-      b: "TypeScript",
-      c: "npm"
+    {
+        question: 'Who made this test',
+        answers: [
+        { text: 'Reggie', correct: true },
+        { text: 'The professor', correct: false },
+        { text: 'Some rando on stack overflow ', correct: false },
+        { text: 'Some student I paid', correct: false }
+        ]
     },
-    correctAnswer: "c"
-  },
-  {
-    question: "Which tool can you use to ensure code quality?",
-    answers: {
-      a: "Angular",
-      b: "jQuery",
-      c: "RequireJS",
-      d: "ESLint"
+    {
+        question: 'Best coffee?',
+        answers: [
+        { text: 'Latte', correct: false },
+        { text: 'Black', correct: true },
+        { text: 'Espresso', correct: false },
+        { text: 'Mocha', correct: false }
+        ]
     },
-    correctAnswer: "d"
-  }
-];
+    {
+        question: 'Best Ice Cream?',
+        answers: [
+        { text: 'Chocolate', correct: false },
+        { text: 'Cookies and Cream', correct: true },
+        { text: 'Mint Chocolate Chip', correct: false },
+        { text: 'Strawberry', correct: false }
+        ]
+    }
+]
 
-  function buildQuiz(){
-    // variable to store the HTML output
-    const output = [];
-  
-    // for each question...
-    myQuestions.forEach(
-      (currentQuestion, questionNumber) => {
-  
-        // variable to store the list of possible answers
-        const answers = [];
-  
-        // and for each available answer...
-        for(letter in currentQuestion.answers){
-  
-          // ...add an HTML radio button
-          answers.push(
-            `<label>
-              <input type="radio" name="question${questionNumber}" value="${letter}">
-              ${letter} :
-              ${currentQuestion.answers[letter]}
-            </label>`
-          );
+startButton.addEventListener('click',startGame);
+
+// Timer 
+function startTimer(duration, display) {
+    var timer = duration, minutes, seconds;
+    setInterval(function () {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.textContent = minutes + ":" + seconds;
+
+        if (--timer < 0) {
+            timer = duration;
         }
-  
-        // add this question and its answers to the output
-        output.push(
-          `<div class="question"> ${currentQuestion.question} </div>
-          <div class="answers"> ${answers.join('')} </div>`
-        );
-      }
-    );
-  
-    // finally combine our output list into one string of HTML and put it on the page
-    quizContainer.innerHTML = output.join('');
-  }
-
-  // we'll want to store the list of answer choices
-const answers = [];
-
-// and for each available answer...
-for(letter in currentQuestion.answers){
-
-  // ...add an html radio button
-  answers.push(
-    `<label>
-      <input type="radio" name="question${questionNumber}" value="${letter}">
-      ${letter} :
-      ${currentQuestion.answers[letter]}
-    </label>`
-  );
+        if(seconds === 0) {
+            alert('Game Over!')
+        }
+    }, 1000);
 }
 
-// add this question and its answers to the output
-output.push(
-  `<div class="question"> ${currentQuestion.question} </div>
-  <div class="answers"> ${answers.join('')} </div>`
-);
+startButton.addEventListener('click',startGame);
+startButton.addEventListener("click", function() {
+    var twoMinutes = 60 * 2,
+        display = document.querySelector('#time');
+    startTimer(twoMinutes, display);
+});
+
+// Start The Questions 
+function startGame() {
+    
+    startButton.classList.add('hide');
+    shuffledQuestions = questions.sort(() => Math.random() - .5);
+    questionsContainerEl.classList.remove('hide');
+    currentQuestionsIndex = 0;
+    nextQuestion();
+    nextButton.classList.remove('hide')
+
+}
+
+function showQuestion(questions) {
+    questionElement.innerText = questions.question
+    console.log(questions)
+    question.answers.forEach(answer => {
+      const button = document.createElement('button')
+      button.innerText = answer.text
+      button.classList.add('btn')
+      if (answer.correct) {
+        button.dataset.correct = answer.correct
+      }
+      button.addEventListener('click', selectAnswer)
+      answerButtonsElement.appendChild(button)
+    })
+}
+
+
+// Reset 
+function resetState() {
+    clearStatusClass(document.body)
+    nextButton.classList.add('hide')
+    while (answerButtonsElement.firstChild) {
+        answerButtonsElement.removeChild(answerButtonsElement.firstChild)
+    }
+}
+
+// Test Loop
+function questionsloop(questions) {
+
+    for (var i = 0; i < questions.length; i ++);
+    questions.innerText('#question');
+    if (answer.correct) {
+        button.dataset.correct = answer.correct
+        score ++;
+    }
+    score.innerText('Correct')
+
+}
+
+// Next Questions 
+function nextQuestion() {
+    showQuestion(shuffledQuestions[currentQuestionIndex]);
+    
+}
