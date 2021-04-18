@@ -73,12 +73,6 @@ const intro = $("#intro");
 const startBtn = $("#start-btn");
 const answerButtonsContainer = $("#answer-buttons-container");
 const prompt = $("#prompt");
-const answerButtons = [
-  $("#answer1"),
-  $("#answer2"),
-  $("#answer3"),
-  $("#answer4")
-]
 const rightWrongContainer = $("#right-wrong");
 
 // Start button starts the timer and begins showing questions.
@@ -114,13 +108,23 @@ function displayNextQuestion() {
   const currentQuestion = questions[currentQuestionIndex];
   prompt.text(currentQuestion.question);
 
+  answerButtonsContainer.empty();
   const currentAnswers = currentQuestion.answers;
   for (var i = 0; i < currentAnswers.length; i++) {
     let currentAnswer = currentAnswers[i];
-    answerButtons[i].text((i + 1) + ". " + currentAnswer.text);
-    answerButtons[i].data("correct", currentAnswer.correct);
-    answerButtons[i].click(selectedAnswer);
+    answerButtonsContainer.append(
+      createAnswerButton(i, currentAnswer)
+    )
   }
+}
+
+function createAnswerButton(index, answer) {
+  let answerButton = document.createElement("button");
+  answerButton.className = "btn btn-primary";
+  answerButton.innerText = (index + 1) + ". " + answer.text;
+  answerButton.dataset.correct = answer.correct;
+  answerButton.addEventListener("click", selectedAnswer);
+  return answerButton;
 }
 
 function selectedAnswer() {
