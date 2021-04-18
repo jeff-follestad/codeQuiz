@@ -56,6 +56,8 @@ const questions = [
 
 // Used to reset `timeToAnswer` after we get final score.
 const defaultTimeToAnswer = 90;
+const timePenaltyForWrongAnswer = 10;
+
 // Assigned to setInterval() return value.
 var quizTimer;
 // The unit here is seconds.
@@ -128,10 +130,16 @@ function selectedAnswer() {
     currentScore++;
     $("#right-wrong p").text("Correct!");
   } else {
+    applyPenalty();
     $("#right-wrong p").text("Wrong!");
   }
 
   displayNextQuestion();
+}
+
+function applyPenalty() {
+  timeToAnswer -= timePenaltyForWrongAnswer;
+  updateTimerLabel();
 }
 
 function showFinalScore() {
