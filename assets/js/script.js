@@ -57,13 +57,14 @@ const questions = [
 // Used to reset `timeToAnswer` after we get final score.
 const defaultTimeToAnswer = 90;
 const timePenaltyForWrongAnswer = 10;
+const defaultQuestionIndex = -1;
 
 // Assigned to setInterval() return value.
 var quizTimer;
 // The unit here is seconds.
 var timeToAnswer = defaultTimeToAnswer;
 // The index of the current question from the `questions` array above.
-var currentQuestionIndex = -1;
+var currentQuestionIndex = defaultQuestionIndex;
 // Incremented each time a correct answer is chosen.
 var currentScore = 0;
 
@@ -157,10 +158,12 @@ function saveFinalScore() {
   const inputInitials = $("#initials-input").val();
   if (inputInitials.trim() === "") {
     alert("Please enter your initials!")
+    return
   } else {
     addHighscore(inputInitials, currentScore);
   }
   timeToAnswer = defaultTimeToAnswer;
+  currentQuestionIndex = defaultQuestionIndex;
 }
 
 // Returns an object containing pairs of initials to high scores.
