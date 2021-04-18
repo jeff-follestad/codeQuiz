@@ -1,14 +1,14 @@
-// 1. WHEN I click the start button, THEN a timer starts and I am presented with a question//
+// 1. WHEN I click the start button, THEN a timer starts and I am presented with a question
 
-// 2. WHEN I answer a question incorrectly, THEN time is subtracted from the clock//
+// 2. WHEN I answer a question incorrectly, THEN time is subtracted from the clock
 
-// 3. WHEN all questions are answered or the timer reaches 0, THEN the game is over//
+// 3. WHEN all questions are answered or the timer reaches 0, THEN the game is over
 
-// 4. WHEN the game is over, THEN I can save my initials and score//
+// 4. WHEN the game is over, THEN I can save my initials and score
 
 const questions = [
   {
-    question: "Commonly used data types DO NOT include ________",
+    question: "Commonly used data types DO NOT include ________.",
     answers: [
       { text: "strings", correct: false },
       { text: "booleans", correct: false },
@@ -17,7 +17,7 @@ const questions = [
     ]
   },
   {
-    question: "The condition in an if / else statement is enclosed with ________",
+    question: "The condition in an if / else statement is enclosed with ________.",
     answers: [
       { text: "quotes", correct: false },
       { text: "curly brackets", correct: false },
@@ -26,7 +26,7 @@ const questions = [
     ]
   },
   {
-    question: "Arrays in JavaScript can be used to store ________",
+    question: "Arrays in JavaScript can be used to store ________.",
     answers: [
       { text: "numbers and strings", correct: false },
       { text: "other arrays", correct: false },
@@ -38,7 +38,7 @@ const questions = [
     question: "String values must be enclosed within ________ when being assigned to variables.",
     answers: [
       { text: "commas", correct: false },
-      { text: "curly brackets", correct: true },
+      { text: "curly brackets", correct: false },
       { text: "quotes", correct: true },
       { text: "parentheses", correct: false }
     ]
@@ -54,11 +54,16 @@ const questions = [
   }
 ]
 
+// Assigned to setInterval() return value.
+var quizTimer;
 // The unit here is seconds.
 var timeToAnswer = 90;
 // The index of the current question from the `questions` array above.
 var currentQuestionIndex = -1;
+// Incremented each time a correct answer is chosen.
+var currentScore = 0;
 
+const timerLabel = $("#timer-label");
 const intro = $("#intro");
 const startBtn = $("#start-btn");
 const answerButtonsContainer = $("#answer-buttons-container");
@@ -69,15 +74,17 @@ const answerButtons = [
   $("#answer3"),
   $("#answer4")
 ]
+const rightWrongContainer = $("#right-wrong");
 
 function startQuiz() {
   updateTimerLabel();
+  timerLabel.show();
   intro.hide();
   startBtn.hide();
   answerButtonsContainer.show();
 
   // Start the repeating timer.
-  setInterval(function () {
+  quizTimer = setInterval(function () {
     timeToAnswer--;
     updateTimerLabel();
   }, 1000);
@@ -89,11 +96,17 @@ function startQuiz() {
 startBtn.click(startQuiz);
 
 function updateTimerLabel() {
-  $("#timer-label").text("Time: " + timeToAnswer);
+  timerLabel.text("Time: " + timeToAnswer);
 }
 
 function displayNextQuestion() {
   currentQuestionIndex++;
+  if (currentQuestionIndex >= questions.length) {
+    // No more questions to display.
+    showFinalScore();
+    return
+  }
+
   const currentQuestion = questions[currentQuestionIndex];
   prompt.text(currentQuestion.question);
 
@@ -108,10 +121,22 @@ function displayNextQuestion() {
 
 function selectAnswer() {
   const isCorrect = $(this).data("correct");
+  rightWrongContainer.show();
+
   if (isCorrect) {
-    // TODO
+    currentScore++;
+    $("#right-wrong p").text("Correct!");
   } else {
-    // TODO
+    $("#right-wrong p").text("Wrong!");
   }
+
   displayNextQuestion();
+}
+
+function showFinalScore() {
+  $("#final-score").show();
+  answerButtonsContainer.hide();
+  rightWrongContainer.hide();
+  timerLabel.hide();
+  clearInterval(quizTimer);
 }

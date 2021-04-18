@@ -21,8 +21,7 @@
         <h6 class="text-left">View High Scores</h6>
       </div>
 
-      <div class="col">
-      </div>
+      <div class="col"></div>
 
       <div class="col-3">
         <!--timer counts down from 60 after start button is clicked -->
@@ -52,11 +51,26 @@
           <button id="answer3" class="btn btn-primary">Answer 3</button>
           <button id="answer4" class="btn btn-primary">Answer 4</button>
         </div>
+
+        <div id="final-score" class="hide">
+          <p>Final score</p>
+          <form class="form-inline">
+            <div class="form-group mb-2">
+              <p class="form-control-plaintext">Enter initials:</p>
+            </div>
+            <div class="form-group mx-sm-3 mb-2">
+              <label for="initials-input" class="sr-only">Initials</label>
+              <input class="form-control" id="initials-input" placeholder="Initials">
+            </div>
+            <button type="submit" class="btn btn-primary mb-2">Submit</button>
+          </form>
+
+        </div>
       </div>
     </div>
 
-   
-    <div id="right-wrong" class="row justify-content-center">
+
+    <div id="right-wrong" class="row justify-content-center hide">
       <div class="col-8">
         <p class="text-muted font-italic">Wrong!</p>
       </div>

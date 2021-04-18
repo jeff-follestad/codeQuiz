@@ -10,6 +10,10 @@
   display: none;
 }
 
+#prompt {
+  margin-bottom: 2%;
+}
+
 #answer-buttons-container .btn {
   width: 100%;
   margin-bottom: 1%;
