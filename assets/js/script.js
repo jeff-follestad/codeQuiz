@@ -76,7 +76,8 @@ const answerButtons = [
 ]
 const rightWrongContainer = $("#right-wrong");
 
-function startQuiz() {
+// Start button starts the timer and begins showing questions.
+startBtn.click(function () {
   updateTimerLabel();
   timerLabel.show();
   intro.hide();
@@ -91,9 +92,7 @@ function startQuiz() {
 
   // Display the first question.
   displayNextQuestion();
-}
-
-startBtn.click(startQuiz);
+});
 
 function updateTimerLabel() {
   timerLabel.text("Time: " + timeToAnswer);
@@ -115,11 +114,11 @@ function displayNextQuestion() {
     let currentAnswer = currentAnswers[i];
     answerButtons[i].text((i + 1) + ". " + currentAnswer.text);
     answerButtons[i].data("correct", currentAnswer.correct);
-    answerButtons[i].click(selectAnswer);
+    answerButtons[i].click(selectedAnswer);
   }
 }
 
-function selectAnswer() {
+function selectedAnswer() {
   const isCorrect = $(this).data("correct");
   rightWrongContainer.show();
 
@@ -134,9 +133,11 @@ function selectAnswer() {
 }
 
 function showFinalScore() {
-  $("#final-score").show();
   answerButtonsContainer.hide();
   rightWrongContainer.hide();
   timerLabel.hide();
+
   clearInterval(quizTimer);
+  $("#final-score-container").show();
+  $("#final-score").text("Your final score is: " + currentScore);
 }
