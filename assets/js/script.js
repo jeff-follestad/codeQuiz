@@ -158,7 +158,10 @@ function showFinalScore() {
   $("#final-score-container button").click(saveFinalScore);
 }
 
-function saveFinalScore() {
+function saveFinalScore(event) {
+  // https://api.jquery.com/event.preventdefault
+  event.preventDefault();
+
   const inputInitials = $("#initials-input").val();
   if (inputInitials.trim() === "") {
     alert("Please enter your initials!")
@@ -181,7 +184,11 @@ function getCurrentHighscores() {
 }
 
 function addHighscore(initials, score) {
+  const capitalInitials = initials.toUpperCase();
   let currentHighscores = getCurrentHighscores();
-  currentHighscores[initials.toUpperCase()] = score
-  localStorage.setItem("highscores", JSON.stringify(currentHighscores));
+
+  if (score > currentHighscores[capitalInitials]) {
+    currentHighscores[capitalInitials] = score
+    localStorage.setItem("highscores", JSON.stringify(currentHighscores));
+  }
 }
