@@ -54,10 +54,12 @@ const questions = [
   }
 ]
 
+// Used to reset `timeToAnswer` after we get final score.
+const defaultTimeToAnswer = 90;
 // Assigned to setInterval() return value.
 var quizTimer;
 // The unit here is seconds.
-var timeToAnswer = 90;
+var timeToAnswer = defaultTimeToAnswer;
 // The index of the current question from the `questions` array above.
 var currentQuestionIndex = -1;
 // Incremented each time a correct answer is chosen.
@@ -140,4 +142,31 @@ function showFinalScore() {
   clearInterval(quizTimer);
   $("#final-score-container").show();
   $("#final-score").text("Your final score is: " + currentScore);
+  $("#final-score-container button").click(saveFinalScore);
+}
+
+function saveFinalScore() {
+  const inputInitials = $("#initials-input").val();
+  if (inputInitials.trim() === "") {
+    alert("Please enter your initials!")
+  } else {
+    addHighscore(inputInitials, currentScore);
+  }
+  timeToAnswer = defaultTimeToAnswer;
+}
+
+// Returns an object containing pairs of initials to high scores.
+function getCurrentHighscores() {
+  let currentHighscores = localStorage.getItem("highscores");
+  if (currentHighscores == null) {
+    return {};
+  } else {
+    return JSON.parse(currentHighscores);
+  }
+}
+
+function addHighscore(initials, score) {
+  let currentHighscores = getCurrentHighscores();
+  currentHighscores[initials.toUpperCase()] = score
+  localStorage.setItem("highscores", JSON.stringify(currentHighscores));
 }
