@@ -6,139 +6,112 @@
 
 // 4. WHEN the game is over, THEN I can save my initials and score//
 
-
-const startButton = document.getElementById('start-btn');
-const nextButton = document.getElementById('next-btn');
-const questionsContainerEl = document.getElementById('questionsCon');
-
-const questionElement = document.getElementById('question')
-const answerButtonsElement = document.getElementById('answer-buttons')
-
-var score = 0;
-
-let shuffledQuestions, currentQuestionIndex;
-
 const questions = [
-    {
-        question: "Commonly used data types DO NOY include:",
-        answers: [
-        { text: 'function ()', correct: true },
-        { text: 'method ()', correct: false },
-        { text: 'variable ()', correct: false },
-        { text: 'class ()', correct: false }
-        ]
-    },
-    {
-        question: 'Who made this test',
-        answers: [
-        { text: 'Reggie', correct: true },
-        { text: 'The professor', correct: false },
-        { text: 'Some rando on stack overflow ', correct: false },
-        { text: 'Some student I paid', correct: false }
-        ]
-    },
-    {
-        question: 'Best coffee?',
-        answers: [
-        { text: 'Latte', correct: false },
-        { text: 'Black', correct: true },
-        { text: 'Espresso', correct: false },
-        { text: 'Mocha', correct: false }
-        ]
-    },
-    {
-        question: 'Best Ice Cream?',
-        answers: [
-        { text: 'Chocolate', correct: false },
-        { text: 'Cookies and Cream', correct: true },
-        { text: 'Mint Chocolate Chip', correct: false },
-        { text: 'Strawberry', correct: false }
-        ]
-    }
+  {
+    question: "Commonly used data types DO NOT include ________",
+    answers: [
+      { text: "strings", correct: false },
+      { text: "booleans", correct: false },
+      { text: "alerts", correct: true },
+      { text: "numbers", correct: false }
+    ]
+  },
+  {
+    question: "The condition in an if / else statement is enclosed with ________",
+    answers: [
+      { text: "quotes", correct: false },
+      { text: "curly brackets", correct: false },
+      { text: "parentheses", correct: true },
+      { text: "square brackets", correct: false }
+    ]
+  },
+  {
+    question: "Arrays in JavaScript can be used to store ________",
+    answers: [
+      { text: "numbers and strings", correct: false },
+      { text: "other arrays", correct: false },
+      { text: "booleans", correct: false },
+      { text: "all of the above", correct: true }
+    ]
+  },
+  {
+    question: "String values must be enclosed within ________ when being assigned to variables.",
+    answers: [
+      { text: "commas", correct: false },
+      { text: "curly brackets", correct: true },
+      { text: "quotes", correct: true },
+      { text: "parentheses", correct: false }
+    ]
+  },
+  {
+    question: "A very useful tool used during development and debugging for printing content to the debugger is:",
+    answers: [
+      { text: "Javascript", correct: false },
+      { text: "terminal/bash", correct: false },
+      { text: "for loops", correct: false },
+      { text: "console.log", correct: true }
+    ]
+  }
 ]
 
-startButton.addEventListener('click',startGame);
+// The unit here is seconds.
+var timeToAnswer = 90;
+// The index of the current question from the `questions` array above.
+var currentQuestionIndex = -1;
 
-// Timer 
-function startTimer(duration, display) {
-    var timer = duration, minutes, seconds;
-    setInterval(function () {
-        minutes = parseInt(timer / 60, 10);
-        seconds = parseInt(timer % 60, 10);
+const intro = $("#intro");
+const startBtn = $("#start-btn");
+const answerButtonsContainer = $("#answer-buttons-container");
+const prompt = $("#prompt");
+const answerButtons = [
+  $("#answer1"),
+  $("#answer2"),
+  $("#answer3"),
+  $("#answer4")
+]
 
-        minutes = minutes < 10 ? "0" + minutes : minutes;
-        seconds = seconds < 10 ? "0" + seconds : seconds;
+function startQuiz() {
+  updateTimerLabel();
+  intro.hide();
+  startBtn.hide();
+  answerButtonsContainer.show();
 
-        display.textContent = minutes + ":" + seconds;
+  // Start the repeating timer.
+  setInterval(function () {
+    timeToAnswer--;
+    updateTimerLabel();
+  }, 1000);
 
-        if (--timer < 0) {
-            timer = duration;
-        }
-        if(seconds === 0) {
-            alert('Game Over!')
-        }
-    }, 1000);
+  // Display the first question.
+  displayNextQuestion();
 }
 
-startButton.addEventListener('click',startGame);
-startButton.addEventListener("click", function() {
-    var twoMinutes = 60 * 2,
-        display = document.querySelector('#time');
-    startTimer(twoMinutes, display);
-});
+startBtn.click(startQuiz);
 
-// Start The Questions 
-function startGame() {
-    
-    startButton.classList.add('hide');
-    shuffledQuestions = questions.sort(() => Math.random() - .5);
-    questionsContainerEl.classList.remove('hide');
-    currentQuestionsIndex = 0;
-    nextQuestion();
-    nextButton.classList.remove('hide')
-
+function updateTimerLabel() {
+  $("#timer-label").text("Time: " + timeToAnswer);
 }
 
-function showQuestion(questions) {
-    questionElement.innerText = questions.question
-    console.log(questions)
-    question.answers.forEach(answer => {
-      const button = document.createElement('button')
-      button.innerText = answer.text
-      button.classList.add('btn')
-      if (answer.correct) {
-        button.dataset.correct = answer.correct
-      }
-      button.addEventListener('click', selectAnswer)
-      answerButtonsElement.appendChild(button)
-    })
+function displayNextQuestion() {
+  currentQuestionIndex++;
+  const currentQuestion = questions[currentQuestionIndex];
+  prompt.text(currentQuestion.question);
+
+  const currentAnswers = currentQuestion.answers;
+  for (var i = 0; i < currentAnswers.length; i++) {
+    let currentAnswer = currentAnswers[i];
+    answerButtons[i].text((i + 1) + ". " + currentAnswer.text);
+    answerButtons[i].data("correct", currentAnswer.correct);
+    answerButtons[i].click(selectAnswer);
+  }
 }
 
-
-// Reset 
-function resetState() {
-    clearStatusClass(document.body)
-    nextButton.classList.add('hide')
-    while (answerButtonsElement.firstChild) {
-        answerButtonsElement.removeChild(answerButtonsElement.firstChild)
-    }
-}
-
-// Test Loop
-function questionsloop(questions) {
-
-    for (var i = 0; i < questions.length; i ++);
-    questions.innerText('#question');
-    if (answer.correct) {
-        button.dataset.correct = answer.correct
-        score ++;
-    }
-    score.innerText('Correct')
-
-}
-
-// Next Questions 
-function nextQuestion() {
-    showQuestion(shuffledQuestions[currentQuestionIndex]);
-    
+function selectAnswer() {
+  const isCorrect = $(this).data("correct");
+  if (isCorrect) {
+    // TODO
+  } else {
+    // TODO
+  }
+  displayNextQuestion();
 }

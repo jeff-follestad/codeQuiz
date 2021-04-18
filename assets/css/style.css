@@ -1,0 +1,27 @@
+.container {
+  padding-top: 2%;
+}
+
+.mx-auto {
+  display: block;
+}
+
+.hide {
+  display: none;
+}
+
+#answer-buttons-container .btn {
+  width: 100%;
+  margin-bottom: 1%;
+}
+
+#right-wrong {
+  margin-top: 2%;
+}
+
+/** Font color and style here comes from classes in the HTML. */
+#right-wrong p {
+  padding: 1% 0;
+  border-top: 1px solid var(--gray);
+  font-size: 26px;
+}

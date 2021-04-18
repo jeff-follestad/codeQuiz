@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Question Test</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+    integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+  <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+
+<body>
+
+  <div class="container">
+    <!--is this the best way to set up the top/header row?-->
+    <div class="row">
+      <div class="col-3">
+        <!--display high score-->
+        <h6 class="text-left">View High Scores</h6>
+      </div>
+
+      <div class="col">
+      </div>
+
+      <div class="col-3">
+        <!--timer counts down from 60 after start button is clicked -->
+        <h6 id="timer-label" class="text-right">Time: 0</h6>
+      </div>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-8">
+        <h3 id="prompt" class="text-center">Coding Quiz Challenge</h3>
+      </div>
+    </div>
+
+    <div class="row justify-content-center">
+
+      <div class="col-6">
+        <p id="intro" class="text-center">Try to answer the following code-related questions within the time limit. Keep
+          in mind
+          incorrect answers will penalize your score/time by ten seconds!
+        </p>
+
+        <button id="start-btn" class="btn-lg btn-primary mx-auto">Start</button>
+
+        <div id="answer-buttons-container" class="hide">
+          <button id="answer1" class="btn btn-primary">Answer 1</button>
+          <button id="answer2" class="btn btn-primary">Answer 2</button>
+          <button id="answer3" class="btn btn-primary">Answer 3</button>
+          <button id="answer4" class="btn btn-primary">Answer 4</button>
+        </div>
+      </div>
+    </div>
+
+   
+    <div id="right-wrong" class="row justify-content-center">
+      <div class="col-8">
+        <p class="text-muted font-italic">Wrong!</p>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/script.js"></script>
+
+</body>
+
+</html>
