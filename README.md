@@ -3,7 +3,7 @@
 
 ## Background
 
-codeQuiz is a timed quiz on JavaScript fundamentals that stores high scores designed to help users gauge their progress compared to my peers
+codeQuiz is a timed quiz on JavaScript fundamentals that stores high scores. codeQuiz is designed to help users gauge their progress compared to their peers.
 
 
 ## Fuctionality
