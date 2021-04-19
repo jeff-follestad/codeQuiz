@@ -20,5 +20,8 @@ If the user answers a question incorrectly, 10 seconds is subtracted from the ga
 
 When all the questions are answered, or the timer reaches 0, then the game is over.
 
-At the end of the game, a users high score is recorded. Current high scores can be accessed through the link in the upper left corer of the ppliacation.
+At the end of the game, a users high score is recorded. Current high scores can be accessed through the link in the upper left corer of the application.
 
+## Notes
+
+This was the most difficult challenge so far! I had a lot of help from my son Aidan who is a software developer.
