@@ -93,6 +93,9 @@ startBtn.click(function () {
   quizTimer = setInterval(function () {
     timeToAnswer--;
     updateTimerLabel();
+    if (timeToAnswer <= 0) {
+      showFinalScore();
+    }
   }, 1000);
 
   // Display the first question.
