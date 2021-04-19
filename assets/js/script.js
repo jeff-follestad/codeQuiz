@@ -74,9 +74,15 @@ const startBtn = $("#start-btn");
 const answerButtonsContainer = $("#answer-buttons-container");
 const prompt = $("#prompt");
 const rightWrongContainer = $("#right-wrong");
+const finalScoreContainer = $("#final-score-container");
+const highScoresContainer = $("#high-scores-container");
+const highScoresText = $("#high-scores-container p")
 
 // Start button starts the timer and begins showing questions.
 startBtn.click(function () {
+  timeToAnswer = defaultTimeToAnswer;
+  currentQuestionIndex = defaultQuestionIndex;
+
   updateTimerLabel();
   timerLabel.show();
   intro.hide();
@@ -153,7 +159,7 @@ function showFinalScore() {
   timerLabel.hide();
 
   clearInterval(quizTimer);
-  $("#final-score-container").show();
+  finalScoreContainer.show();
   $("#final-score").text("Your final score is: " + currentScore);
   $("#final-score-container button").click(saveFinalScore);
 }
@@ -169,8 +175,7 @@ function saveFinalScore(event) {
   } else {
     addHighscore(inputInitials, currentScore);
   }
-  timeToAnswer = defaultTimeToAnswer;
-  currentQuestionIndex = defaultQuestionIndex;
+  viewHighscores();
 }
 
 // Returns an object containing pairs of initials to high scores.
@@ -186,9 +191,48 @@ function getCurrentHighscores() {
 function addHighscore(initials, score) {
   const capitalInitials = initials.toUpperCase();
   let currentHighscores = getCurrentHighscores();
+  const currentHighscore = currentHighscores[capitalInitials];
 
-  if (score > currentHighscores[capitalInitials]) {
+  if (currentHighscore == null || score > currentHighscore) {
     currentHighscores[capitalInitials] = score
     localStorage.setItem("highscores", JSON.stringify(currentHighscores));
   }
 }
+
+function viewHighscores() {
+  prompt.text("High scores");
+  intro.hide();
+  startBtn.hide();
+  highScoresContainer.show();
+  finalScoreContainer.hide();
+  highScoresText.empty();
+
+  const currentHighscores = getCurrentHighscores();
+  var number = 1;
+
+  // https://stackoverflow.com/a/10179849/15371932
+  for (const initials in currentHighscores) {
+    const score = currentHighscores[initials];
+    highScoresText.append(number + ". " + initials + " - " + score + "<br>");
+    number++;
+  }
+}
+
+$("#view-high-scores").click(viewHighscores);
+
+$("#restart-game").click(function () {
+  prompt.text("Coding Quiz Challenge");
+  timerLabel.show();
+  intro.show();
+  startBtn.show();
+  answerButtonsContainer.hide();
+  highScoresContainer.hide();
+
+  timeToAnswer = 0;
+  updateTimerLabel();
+});
+
+$("#clear-high-scores").click(function () {
+  highScoresText.empty();
+  localStorage.removeItem("highscores");
+});
