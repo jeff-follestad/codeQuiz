@@ -1,43 +1,24 @@
 # codeQuiz
 
-# 04 Web APIs: Code Quiz
 
-As you proceed in your career as a web developer, you will probably be asked to complete a coding assessment, which is typically a combination of multiple-choice questions and interactive challenges. Build a timed code quiz with multiple-choice questions. This app will run in the browser and feature dynamically updated HTML and CSS powered by your JavaScript code. It will also feature a clean and polished user interface and be responsive, ensuring that it adapts to multiple screen sizes.
+## Background
 
-## User Story
+codeQuiz is a timed quiz on JavaScript fundamentals that stores high scores designed to help users gauge their progress compared to my peers
 
-```
-AS A coding bootcamp student
-I WANT to take a timed quiz on JavaScript fundamentals that stores high scores
-SO THAT I can gauge my progress compared to my peers
-```
 
-## Acceptance Criteria
+## Fuctionality
 
-```
-GIVEN I am taking a code quiz
+codeQuiz is a timed, 90 second, mutliple choice quiz platform built with HTML, CSS, and Javascript. 
 
-WHEN I answer a question
-THEN I am presented with another question
-WHEN I answer a question incorrectly
-THEN time is subtracted from the clock
-WHEN all questions are answered or the timer reaches 0
-THEN the game is over
-WHEN the game is over
-THEN I can save my initials and score
-```
+codeQuiz also leverages Bootstrap and jQuery.
 
-The following animation demonstrates the application functionality:
+codeQuiz is optimized for both mobile and desktop displays.
 
-![code quiz](./Assets/04-web-apis-homework-demo.gif)
+When a user answers a question, they are presented with another question.
 
-### Review
+If the user answers a question incorrectly, 10 seconds is subtracted from the game clock.
 
-You are required to submit the following for review:
+When all the questions are answered, or the timer reaches 0, then the game is over.
 
-* The URL of the functional, deployed application.
+At the end of the game, a users high score is recorded. Current high scores can be accessed through the link in the upper left corer of the ppliacation.
 
-* The URL of the GitHub repository. Give the repository a unique name and include a README describing the project.
-
-- - -
-© 2021 Trilogy Education Services, LLC, a 2U, Inc. brand. Confidential and Proprietary. All Rights Reserve
