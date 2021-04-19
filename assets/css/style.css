@@ -29,3 +29,8 @@
   border-top: 1px solid var(--gray);
   font-size: 26px;
 }
+
+#high-scores-container p {
+  background-color: #D9D3E9;
+  padding: 1% 2%;
+}
