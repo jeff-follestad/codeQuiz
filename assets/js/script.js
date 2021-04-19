@@ -157,6 +157,7 @@ function applyPenalty() {
 }
 
 function showFinalScore() {
+  prompt.text("All done!");
   answerButtonsContainer.hide();
   rightWrongContainer.hide();
   timerLabel.hide();
